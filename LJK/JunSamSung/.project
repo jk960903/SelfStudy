@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>JunSamSung</name>
+	<comment></comment>
+	<projects>
+		<project>2018kakaoCodeFestival</project>
+		<project>Baekjoon</project>
+		<project>BaekJoonJun</project>
+		<project>DataStructure</project>
+		<project>Jun</project>
+		<project>Kakao</project>
+		<project>Line</project>
+		<project>Programers</project>
+		<project>Study</project>
+		<project>SWExpert</project>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+</projectDescription>
