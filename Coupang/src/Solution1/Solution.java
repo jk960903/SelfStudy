@@ -1,87 +1,54 @@
 package Solution1;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 public class Solution {
 	public static void main(String[] args) {
-		int answer=0;
-		int n=2;
-		String[] customers= {"02/28 23:59:00 03","03/01 00:00:00 02", "03/01 00:05:00 01"};
-		
-		int[] kiosktime=new int[n];
-		HashMap<Integer,Integer> map=new HashMap<>();
-		int min=210000000;
-		int minindex=0;
-		for(int i=0; i<n; i++) {
-			map.put(i,1);
-		}
-		for(int i=0; i<n; i++) {
-			String[] custom=customers[i].split(" ");
-			String[] time=custom[1].split(":");
-			String[] day=custom[0].split("/");
-			int come=Integer.parseInt(time[2])+Integer.parseInt(time[1])*60+Integer.parseInt(time[0])*3600;
-			come=come+(Integer.parseInt(day[1])-1)*3600*24;
-			come=come+(Integer.parseInt(day[0])-1)*3600*24*30;
-			int end=come+(Integer.parseInt(custom[2])*60);
-			kiosktime[i]=end;
-			if(min>kiosktime[i]) {
-				min=end;
-				minindex=i;
-			}
-		}
-
-		for(int i=n; i<customers.length; i++) {
-			String[] custom=customers[i].split(" ");
-			String[] time=custom[1].split(":");
-			String[] day=custom[0].split("/");
-			int come=Integer.parseInt(time[2])+Integer.parseInt(time[1])*60+Integer.parseInt(time[0])*3600;
-			come=come+(Integer.parseInt(day[1])-1)*3600*24;
-			come=come+(Integer.parseInt(day[0])-1)*3600*24*30;
-			int end=0;
-			if(come>=min) {
-				int[] notusetime=new int[n];
-				int maxtime=0;
-				int maxindex=0;
-				for(int j=0; j<n; j++) {
-					if(come>=kiosktime[j]) {
-						notusetime[j]=come-kiosktime[j];
-						if(notusetime[j]>maxtime) {
-							maxtime=notusetime[j];
-							maxindex=j;
-						}
-					}
-				}
-				map.put(maxindex,map.get(maxindex)+1);
-				kiosktime[maxindex]=come+Integer.parseInt(custom[2])*60;
-				min=210000000;
-				for(int j=0; j<n; j++) {
-					if(kiosktime[j]<min) {
-						min=kiosktime[j];
-						minindex=j;
-					}
-				}
-			}else {
-					end=kiosktime[minindex]+Integer.parseInt(custom[2])*60;
-					kiosktime[minindex]=end;
-					map.put(minindex,map.get(minindex)+1);
-					min=210000000;
-					for(int j=0; j<n; j++) {
-						if(min>kiosktime[j]) {
-							min=kiosktime[j];
-							minindex=j;
-						}
-					}
-			}
-		}
-		int max=0;
-		for(int i=0; i<n; i++) {
-			if(map.get(i)>max) {
-				max=map.get(i);
-			}
-		}
-		answer=max;
-		System.out.println(max);
+		String source="mqfsnmygrquczhymvkurxfelpeagkisearktnjrcapbuuawnmcrgsfsnusuprtnnzbuvtoemgiohvicsnkqhbgoomupuvjmfzpqp";
+		String target="yelitmysnjcfgvvvezaprgaonzkofyqqhfmxseezencanocepyzxocwivnkbjrhcehqlcwsagrfookhiwsrjguzonapppyyodlqx";
+		char[] sourcearray=source.toCharArray();
+        char[] targetarray=target.toCharArray();
+        int gap[]=new int[sourcearray.length];
+        int max=0;
+        HashMap<Integer,Integer> map=new HashMap<>();
+        HashSet<Integer> set=new HashSet<>();
+        for(int i=0; i<sourcearray.length; i++){
+            gap[i]=Math.abs(sourcearray[i]-targetarray[i]);
+            int othergap=26-Math.abs(gap[i]);
+            if(!map.containsKey(gap[i])){
+                map.put(gap[i],1);
+                set.add(gap[i]);
+            }else{
+                int num=map.get(gap[i]);
+                map.put(gap[i],num+1);
+            }
+            if(!map.containsKey(othergap)) {
+                map.put(othergap,1);
+                set.add(othergap);
+            }
+            else{
+                int num=map.get(othergap);
+                map.put(othergap,num+1);
+            }
+        }
+        
+        for(int i :set){
+            int num=map.get(i);
+            int tempnum=map.get(26-num);
+            if(num+tempnum>max){
+                max=num+tempnum;
+            }
+        }
+        int result=0;
+        if(map.containsKey(26-max)&&map.containsKey(26)&&map.containsKey(0)){
+            result=(sourcearray.length-max-map.get(26-max))*2;
+        }else if(map.containsKey(26-max)){
+            result=(sourcearray.length-max-map.get(26-max))*2;
+        }else{
+            result=(sourcearray.length-max)*2;
+        }
+        int a=0;
+        System.out.println(result);
 	}
 }
 

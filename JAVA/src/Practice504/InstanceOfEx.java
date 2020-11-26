@@ -1,4 +1,5 @@
 package Practice504;
+import java.lang.System;
 class Person{}
 class Student extends Person{}
 class Researcher extends Person{}
